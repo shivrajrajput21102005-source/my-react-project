@@ -65,15 +65,31 @@ import { format } from "path";
 import googleLogin from "./controller/googleLogin.js";
 import MessageModule from "./modules/messageModule.js";
 import GoogleUser from "./modules/realgoogleUser.js";
+import AllPlans from "./modules/allPlansModule.js";
 // import publicRoute from "./routes/publicRoute.js";
 // import Jwt from "jsonwebtoken";
 
-ConnectDB();
+// ConnectDB();
 const app = express();
 app.use(morgan("dev"));
 const server = http.createServer(app);
 const PORT = process.env.PORT | 5000;
-
+// ConnectDB().then(() => {
+//   server.listen(PORT, () => {
+//     console.log("server run on the ", PORT);
+//   });
+// });
+const start = async () => {
+  try {
+    await ConnectDB();
+    server.listen(PORT, () => {
+      console.log("server run on port ", PORT);
+    });
+  } catch (err) {
+    console.log("err in start", err);
+  }
+};
+start();
 app.use(express.json());
 // app.use(cors());
 app.use(cookieParser());
@@ -84,6 +100,8 @@ app.use(
     credentials: true,
   }),
 );
+
+  console.log("allplans documentos", await AllPlans.countDocuments());
 
 // app.use(cors());
 // app.use(bodyParser.json());
@@ -142,12 +160,12 @@ async function hero() {
   const user = await User.find();
   console.log("user", user);
 }
-hero();
+// hero();
 async function lala() {
   const lala = await GoogleUser.findById("69e9c605f24831d153e14472");
   console.log("lal", lala);
 }
-lala();
+// lala();
 app.post("/updatepass", async (req, res) => {
   const { email, password, newPassword } = req.body;
   if (!email && !password && !newPassword) {
@@ -181,7 +199,7 @@ const createAdmin = async () => {
     console.log("admins signup successfully");
   }
 };
-createAdmin();
+// createAdmin();
 // llpopo.ar =
 // const end = async ()=>{
 //   await MemberPlan.collection.updateMany({},[
@@ -221,6 +239,8 @@ createAdmin();
 // const user = User.find({email})
 // console.log("yse",typeof User);
 
-server.listen(PORT, () => {
-  console.log("server run on the ", PORT);
-});
+// ConnectDB().then(() => {
+//   server.listen(PORT, () => {
+//     console.log("server run on the ", PORT);
+//   });
+// });
