@@ -2,14 +2,10 @@ import ConnectDB from "./db.js";
 import AllPlans from "./modules/allPlansModule.js";
 // ConnectDB();
 
-const declarPlans = async () => {
-  console.log("palns save");
-  try {
-    await ConnectDB();
-  } catch (err) {
-    return console.log("err in db connection", err);
-  }
+export const declarPlans = async () => {
+
   if ((await AllPlans.countDocuments()) == 0) {
+
     await AllPlans.insertMany([
       {
         name: "Starter",
@@ -205,6 +201,5 @@ const declarPlans = async () => {
       },
     ]);
   }
-  console.log("plans save succesfully");
 };
-declarPlans();
+// declarPlans();

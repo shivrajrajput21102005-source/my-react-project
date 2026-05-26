@@ -66,6 +66,7 @@ import googleLogin from "./controller/googleLogin.js";
 import MessageModule from "./modules/messageModule.js";
 import GoogleUser from "./modules/realgoogleUser.js";
 import AllPlans from "./modules/allPlansModule.js";
+import { declarPlans } from "./seedAllPlans.js";
 // import publicRoute from "./routes/publicRoute.js";
 // import Jwt from "jsonwebtoken";
 
@@ -90,25 +91,26 @@ const start = async () => {
   }
 };
 start();
+declarPlans();
 app.use(express.json());
 // app.use(cors());
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    origin: "http://localhost:1212",
+    origin: "https://duopofitnessclubmanager.vercel.app",
     credentials: true,
   }),
 );
 
-  console.log("allplans documentos", await AllPlans.countDocuments());
+console.log("allplans documentos", await AllPlans.countDocuments());
 
 // app.use(cors());
 // app.use(bodyParser.json());
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:1234",
-    methods: ["GET", "PORT"],
+    origin: "https://duopofitnessclubmanager.vercel.app",
+    methods: ["GET", "POST"],
   },
 });
 io.on("connection", (socket) => {

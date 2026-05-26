@@ -46,6 +46,7 @@ const Expiry = () => {
     return (
       <div className="w-full h-screen flex justify-center items-center">
         <div>someting wrong</div>
+        <div>{error.message}</div>
       </div>
     );
   }
